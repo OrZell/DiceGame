@@ -42,7 +42,7 @@ body {
 .player-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  justify-content: flex-start;
   background-color: #ffffff;
   padding: 0px 10px;
   border: 1px;
@@ -67,6 +67,10 @@ button {
   padding: 12px 20px;
   margin-top: 8px;
   font-size: 18px;
+}
+
+button:hover {
+  background-color: #a1a0a0;
 }
 
 .game-screen-title {
@@ -108,8 +112,8 @@ button {
 }
 
 .qube {
-  width: 130px;
-  height: 130px;
+  width: 100px;
+  height: 100px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   border: 3px solid #fff;
   filter: brightness(1.1) contrast(1.2) saturate(1.3);

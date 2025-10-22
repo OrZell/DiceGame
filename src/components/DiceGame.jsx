@@ -5,7 +5,6 @@ import PlayerCard from './PlayerCard'
 import Dice from './Dice'
 
 function DiceGame() {
-  // const [wins, setWins] = useState([0, 0])
   const [playerNames, setPlayersNames] = useState(null)
   const [holdScore, setHoldScore] = useState(0)
   const [playerScores, setPlayerScores] = useState([0, 0])
@@ -21,14 +20,23 @@ function DiceGame() {
   }
 
   const rollDice = () => {
+
     const roll1 = Math.floor(Math.random() * 6) + 1
     const roll2 = Math.floor(Math.random() * 6) + 1
 
     setDice1(roll1)
     setDice2(roll2)
 
+    
+    if (roll1 === 6 && roll2 === 6) {
+      setHoldScore(0)
+      setCurrentPlayer(currentPlayer === 0 ? 1 : 0)
+      return
+    }
+    
     const newHoldScore = holdScore
     setHoldScore(newHoldScore + roll1 + roll2)
+
   }
 
   function holdScoreClick() {
@@ -45,14 +53,25 @@ function DiceGame() {
     }
     
     if (newPlayerScore[currentPlayer] > targetScore) {
-      setWinner(currentPlayer === 0 ? 1 : 0)
+      const otherPlayer = currentPlayer === 0 ? 1 : 0
+      setWinner(otherPlayer)
       return
     }
 
     setCurrentPlayer(currentPlayer === 0 ? 1 : 0)
   }
 
+  const newGame = () => {
+    setPlayerScores([0, 0])
+    setCurrentPlayer(0)
+    setHoldScore(0)
+    setDice1(1)
+    setDice2(1)
+    setWinner(null)
+  }
+
   const resetGame = () => {
+    setPlayersNames([null])
     setPlayerScores([0, 0])
     setCurrentPlayer(0)
     setHoldScore(0)
@@ -90,8 +109,8 @@ function DiceGame() {
       </div>
 
       <div className='game-buttons'>
-        <button onClick={holdScoreClick} disabled={!!winner}>Hold</button>
-        <button onClick={rollDice} disabled={!!winner}>Roll</button>
+        <button onClick={holdScoreClick} disabled={winner !== null}>Hold</button>
+        <button onClick={rollDice} disabled={winner !== null}>Roll</button>
       </div>
       <div className='newgame-button'>
         <button onClick={resetGame}>New Game</button>
